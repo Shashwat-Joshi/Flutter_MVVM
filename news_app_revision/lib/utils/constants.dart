@@ -5,4 +5,8 @@ class ApiKey {
 class Constants {
   static String topHeadlinesUrl =
       "https://newsapi.org/v2/top-headlines?country=us&apiKey=${ApiKey._apiKey}";
+
+  static String searchByKeywordUrl(String keyword) {
+    return "https://newsapi.org/v2/top-headlines?q=$keyword&apiKey=${ApiKey._apiKey}";
+  }
 }

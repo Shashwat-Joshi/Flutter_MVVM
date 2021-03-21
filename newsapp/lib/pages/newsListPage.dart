@@ -76,7 +76,6 @@ class _NewsListPageState extends State<NewsListPage> {
             child: TextField(
               onSubmitted: (val) {
                 // Fetch all the news related to the keyword
-
                 if (val.isNotEmpty) {
                   viewModel.populateSearchedHeadlines(keyword: val);
                 }
