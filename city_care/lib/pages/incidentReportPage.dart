@@ -1,8 +1,12 @@
+import 'package:city_care/view_models/reportIncidentViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class IncidentReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<ReportIncidentViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Report an incident"),
@@ -14,6 +18,7 @@ class IncidentReportPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(
+                onChanged: (val) => vm.title = val,
                 decoration: InputDecoration(
                   labelText: "Enter title",
                   border: OutlineInputBorder(
@@ -25,6 +30,7 @@ class IncidentReportPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(
+                onChanged: (val) => vm.description = val,
                 textInputAction: TextInputAction.done,
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
@@ -39,7 +45,10 @@ class IncidentReportPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  vm.saveIncident();
+                  Navigator.pop(context);
+                },
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(
                     EdgeInsets.symmetric(vertical: 8.0, horizontal: 30.0),

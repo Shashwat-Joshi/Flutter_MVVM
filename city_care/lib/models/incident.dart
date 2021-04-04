@@ -1,6 +1,6 @@
 class Incident {
-  final String title;
-  final String description;
+  final String? title;
+  final String? description;
 
   Incident({
     required this.title,
