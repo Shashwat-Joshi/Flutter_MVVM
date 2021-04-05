@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:camera/camera.dart';
+import 'package:city_care/pages/takePicturePage.dart';
 import 'package:city_care/view_models/reportIncidentViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,7 +30,20 @@ class _IncidentReportPageState extends State<IncidentReportPage> {
     });
   }
 
-  void _showCamera() async {}
+  void _showCamera() async {
+    final cameras = await availableCameras();
+    final camera = cameras.first;
+
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TakePicturePage(camera: camera),
+      ),
+    );
+    setState(() {
+      _reportIncidentViewModel.imagePath = result;
+    });
+  }
 
   void _showPhotoSelectionOptions(BuildContext context) {
     showModalBottomSheet(
@@ -60,10 +74,14 @@ class _IncidentReportPageState extends State<IncidentReportPage> {
     );
   }
 
+  void _saveIncident(BuildContext context) async {
+    await _reportIncidentViewModel.saveIncident();
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ReportIncidentViewModel>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Report an incident"),
@@ -127,8 +145,7 @@ class _IncidentReportPageState extends State<IncidentReportPage> {
               padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
               child: TextButton(
                 onPressed: () {
-                  vm.saveIncident();
-                  Navigator.pop(context);
+                  _saveIncident(context);
                 },
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(

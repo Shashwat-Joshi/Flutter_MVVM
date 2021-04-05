@@ -8,7 +8,9 @@ class ReportIncidentViewModel extends ChangeNotifier {
   String? imagePath;
 
   Future<void> saveIncident() async {
-    Incident incident = Incident(title: title, description: description);
+    Incident incident =
+        Incident(title: title, description: description, imageURL: imagePath);
     await WebService().saveIncident(incident);
+    notifyListeners();
   }
 }

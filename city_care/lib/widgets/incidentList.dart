@@ -1,3 +1,4 @@
+import 'package:city_care/utils/constants.dart';
 import 'package:city_care/view_models/incidentViewModel.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class IncidentList extends StatelessWidget {
         return Column(
           children: [
             ListTile(
+              leading: Image.network("${Constant.apiUrl}${incident.imageUrl}"),
               title: Text(incident.title),
             ),
             Divider(),
