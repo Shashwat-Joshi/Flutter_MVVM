@@ -12,4 +12,8 @@ class StoryViewModel {
   String get url {
     return this._story.url ?? "";
   }
+
+  int get commentNumbers {
+    return this._story.commentIds == null ? 0 : this._story.commentIds!.length;
+  }
 }
