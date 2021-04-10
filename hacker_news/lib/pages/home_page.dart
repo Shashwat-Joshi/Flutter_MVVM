@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hacker_news/pages/comment_list_page.dart';
+import 'package:hacker_news/view_models/comment_list_view_model.dart';
 import 'package:hacker_news/view_models/story_list_view_model.dart';
 import 'package:hacker_news/view_models/story_view_model.dart';
 import 'package:hacker_news/widgets/story_list.dart';
@@ -18,6 +20,15 @@ class _HomePageState extends State<HomePage> {
 
   void _navigateToCommentsPage(BuildContext context, StoryViewModel story) {
     // TODO: Navigate to comments page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+          create: (context) => CommentListViewModel(),
+          child: CommentListPage(story: story),
+        ),
+      ),
+    );
   }
 
   @override

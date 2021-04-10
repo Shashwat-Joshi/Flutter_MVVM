@@ -49,6 +49,8 @@ class _IncidentListPageState extends State<IncidentListPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    print(size.width);
     final vm = Provider.of<IncidentListViewModel>(context);
     return Scaffold(
       appBar: AppBar(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:hacker_news/model/comment.dart';
 import 'package:hacker_news/model/story.dart';
 import 'package:hacker_news/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -28,6 +29,26 @@ class WebService {
     } else {
       /// [API] call failed
       throw Exception("Unable to fetch top story");
+    }
+  }
+
+  Future<List<Comment>> getCommentsByStory(Story story) async {
+    if (story.commentIds != null) {
+      return Future.wait(story.commentIds!.map((commentId) async {
+        final response =
+            await http.get(Uri.parse(Constant.getCommentsUrl(commentId)));
+
+        if (response.statusCode == 200) {
+          /// Successful [API] call
+          Map<String, dynamic> json = jsonDecode(response.body);
+          return Comment.fromJSON(json);
+        } else {
+          /// [API] call failed
+          throw Exception("Unable to get comments");
+        }
+      }));
+    } else {
+      throw Exception("No comments found");
     }
   }
 }
